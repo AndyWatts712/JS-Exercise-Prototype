@@ -90,6 +90,14 @@ const myCar = new Car("Toyota", 23);
 myCar.fill(25);
 console.log(myCar.tank);
 
+Car.prototype.drive = function(distance){
+  this.odometer += distance;
+  // this.tank = this.tank - (distance / this.milesPergallon);
+}
+
+myCar.drive(100);
+console.log(myCar);
+
 
 /*
   TASK 3
@@ -126,10 +134,11 @@ console.log(babyJoe.stomach);
 
   In your own words explain the four principles for the "this" keyword below:
 
-  1. 
-  2. 
-  3. 
-  4. 
+  1. Global: out of any context, the this keyword will be bound to the windo object.
+  2. Explicit: if you use .call, .apply, or .bind, this will refer to the object you used it on.
+
+  3. Implicit: when you call a method, this is referring to the object to the left of the dot. 
+  4. New: If you create a new object using the new keyword, that object is what this refers to.
 */
 
 
