@@ -39,10 +39,30 @@ Airplane.prototype.land = function () {
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
 
-function Person() {
-
+function Person(name, age) {
+  this.name = name,
+  this.age = age,
+  this.stomach = []
 }
 
+Person.prototype.eat = function(edible) {
+  if (this.stomach.length < 10){
+    this.stomach.push(edible);
+  }
+}
+
+Person.prototype.poop = function(){
+  this.stomach = [];
+}
+
+Person.prototype.toString = function(){
+  return `${this.name}, ${this.age}`
+}
+
+const personOne = new Person("Andy", 51);
+
+personOne.eat("tacos");
+console.log(personOne.stomach); 
 /*
   TASK 2
     - Write a Car constructor that initializes `model` and `milesPerGallon` from arguments.
@@ -57,9 +77,27 @@ function Person() {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
-
+function Car(model, milesPerGallon) {
+  this.model = model,
+  this.milesPerGallon = milesPerGallon,
+  this.tank = 0,
+  this.odometer = 0
 }
+Car.prototype.fill = function(gallons){
+  this.tank = this.tank + gallons;
+}
+const myCar = new Car("Toyota", 23);
+myCar.fill(25);
+console.log(myCar.tank);
+
+Car.prototype.drive = function(distance){
+  this.odometer += distance;
+  // this.tank = this.tank - (distance / this.milesPergallon);
+}
+
+myCar.drive(100);
+console.log(myCar);
+
 
 /*
   TASK 3
@@ -68,18 +106,39 @@ function Car() {
     - Besides the methods on Person.prototype, babies have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-function Baby() {
+Baby.prototype = Object.create(Person.prototype);
 
+function Baby(name, age, favoriteToy) {
+  Person.call(this, name, age),
+  this.favoriteToy = favoriteToy
 }
+Baby.prototype.play = function() {
+  return (`Playing with ${this.favoriteToy}`);
+}
+
+const babyJoe = new Baby({
+  name: "Joe",
+  age: 1,
+  favoriteToy: "matches"
+});
+
+babyJoe.play();
+babyJoe.eat("pizza");
+console.log(babyJoe.stomach);
+babyJoe.poop();
+console.log(babyJoe.stomach);
+
 
 /* 
   TASK 4
 
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+
+  1. Global: out of any context, the this keyword will be bound to the windo object.
+  2. Explicit: if you use .call, .apply, or .bind, this will refer to the object you used it on.
+
+  3. Implicit: when you call a method, this is referring to the object to the left of the dot. 
+  4. New: If you create a new object using the new keyword, that object is what this refers to.
 */
 
 
